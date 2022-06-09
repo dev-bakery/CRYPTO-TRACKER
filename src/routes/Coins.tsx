@@ -23,6 +23,11 @@ const Coin = styled.li`
         padding:20px;
     }
 `;
+const Img = styled.img`
+    width:20px;
+    vertical-align: bottom;
+    margin-right:10px;
+`;
 const Title = styled.h1`
     font-size: 48px;
     color : ${props => props.theme.accentColor};
@@ -31,6 +36,8 @@ const Title = styled.h1`
 const Loader = styled.div`
     text-align: center;
 `;
+
+//api 정보의 타입을 미리 정의함
 interface CoinInterface{
     id :string;
     name : string;
@@ -63,8 +70,12 @@ function Coins(){
             <CoinList>
                 {coins.map((coin) => (
                     <Coin key={coin.id}>
-                        <Link to={`/${coin.id}`}>
-                        {coin.name} &rarr;
+                        <Link to={{
+                            pathname : `/${coin.id}`,
+                            state : {name : coin.name},
+                        }}>
+                            <Img src={`https://cryptocurrencyliveprices.com/img/${coin.id.toLowerCase()}.png` } />
+                            {coin.name} &rarr;
                         </Link>
                     </Coin>
                 ))}
