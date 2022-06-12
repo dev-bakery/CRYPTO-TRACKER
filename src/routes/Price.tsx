@@ -57,7 +57,6 @@ const TextPrice = styled.span`
 function Price({coinId}:PriceProps){
 
     const {isLoading, data} = useQuery<PriceData>(['price', coinId], ()=> fetchCoinTickers(coinId))
-    console.log(data)
     return <>
         {
             isLoading ? 'Loading Price...' : <PriceList>

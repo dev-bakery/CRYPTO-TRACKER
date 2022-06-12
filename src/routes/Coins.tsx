@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import {useQuery} from 'react-query';
 import { fetchCoins } from '../api';
 import {Helmet} from 'react-helmet';
+import { useRecoilState } from 'recoil';
+import { isDarkAtom } from '../atoms';
 
 const Container = styled.div`
     padding:0 20px;
@@ -19,11 +21,11 @@ const Header = styled.header`
 const CoinList = styled.ul``;
 const Coin = styled.li`
     background-color: #fff;
-    color:${props => props.theme.bgColor};
     border-radius: 15px;
     margin-bottom: 10px;
     a{
         padding:20px;
+        color:#000
     }
 `;
 const Img = styled.img`
@@ -49,6 +51,7 @@ const ButtonTheme = styled.button`
     border-radius: 5px;
     padding:0 10px;
     background-color: ${props => props.theme.textColor};
+    color: ${props => props.theme.bgColor};
 `;
 
 //api 정보의 타입을 미리 정의함
@@ -63,6 +66,8 @@ interface ICoin{
 }
 
 function Coins(){
+    const [isDark, setIsDark] = useRecoilState(isDarkAtom);
+    const theme = isDark ? "light" : "dark";
     const {isLoading, data} = useQuery<ICoin[]>('allCoins', fetchCoins);
     // const [coins,  setCoins] = useState<ICoin[]>([]);
     // const [loading, setLoading] = useState(true);
@@ -81,6 +86,7 @@ function Coins(){
             </Helmet>
             <Header>
                 <Title>Coins</Title>
+                <ButtonTheme onClick={() => {setIsDark(isDark ? false : true)}}>{theme}</ButtonTheme>
             </Header>
             {isLoading ? (
                 <Loader>Loading...</Loader>

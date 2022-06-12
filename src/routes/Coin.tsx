@@ -6,6 +6,8 @@ import {Helmet} from 'react-helmet';
 import Chart from './Chart';
 import Price from './Price';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
+import { useRecoilState } from 'recoil';
+import { isDarkAtom } from '../atoms';
 
 const Container = styled.div`
     padding:0 20px;
@@ -30,7 +32,7 @@ const Loader = styled.div`
 const Overview = styled.div`
     display: flex;
     justify-content: space-between;
-    background-color: rgba(0,0,0,0.5);
+    background-color: #fff;
     padding:10px 20px;
     border-radius: 10px;
 `;
@@ -38,6 +40,7 @@ const OverviewItem = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    color:#000;
     span:first-child{
         font-size: 10px;
         font-weight: 400;
@@ -52,7 +55,7 @@ const Description = styled.p`
 const TabContent= styled.div`
     display: flex;
     margin:10px 0;
-    background-color: rgba(0,0,0,0.5);
+    background-color: #fff;
     border-radius: 10px;
     text-transform: uppercase;
     align-items: center;
@@ -66,7 +69,7 @@ const TabContent= styled.div`
     }
 `;
 const Tab = styled.span<{isActive : boolean}>`
-    color:${props => props.isActive ? props.theme.accentColor : props.theme.textColor};
+    color:${props => props.isActive ? props.theme.accentColor : "#000"};
     display: block;
     flex: 1;
 `;
@@ -80,6 +83,19 @@ const ButtonBack = styled.button`
     border-radius: 5px;
     padding:0 10px;
     background-color: ${props => props.theme.textColor};
+    color: ${props => props.theme.bgColor};
+`;
+const ButtonTheme = styled.button`
+    position:absolute;
+    right:0;
+    top:50%;
+    height:30px;
+    transform: translateY(-50%);
+    border:0;
+    border-radius: 5px;
+    padding:0 10px;
+    background-color: ${props => props.theme.textColor};
+    color: ${props => props.theme.bgColor};
 `;
 interface RouteParams{
     coinId : string;
@@ -144,6 +160,8 @@ interface PriceData {
   }
 
 function Coin(){
+    const [isDark, setIsDark] = useRecoilState(isDarkAtom);
+    const theme = isDark ? "light" : "dark";
     let history = useHistory();
     const {coinId} = useParams<RouteParams>();
     const {state} = useLocation<RouteState>();
@@ -178,6 +196,7 @@ function Coin(){
         {/* state는 Coins컴포넌트에서 name값을 받아 오기 때문에 직접 url입력할 경우에는 state값이 없다.  */}
         <Title>{state?.name ? state.name : loading ? "Loading" : infoData?.name}</Title>
         <ButtonBack onClick={()=>{history.goBack()}}>Back</ButtonBack>
+        <ButtonTheme onClick={() => {setIsDark(isDark ? false : true)}}>{theme}</ButtonTheme>
     </Header>
     {loading ? (
         <Loader>Loading...</Loader>
