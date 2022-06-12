@@ -10,6 +10,7 @@ const Container = styled.div`
     max-width: 480px;
 `;
 const Header = styled.header`
+    position:relative;
     height:10vh;
     display: flex;
     justify-content: center;
@@ -37,6 +38,17 @@ const Title = styled.h1`
 
 const Loader = styled.div`
     text-align: center;
+`;
+const ButtonTheme = styled.button`
+    position:absolute;
+    right:0;
+    top:50%;
+    height:30px;
+    transform: translateY(-50%);
+    border:0;
+    border-radius: 5px;
+    padding:0 10px;
+    background-color: ${props => props.theme.textColor};
 `;
 
 //api 정보의 타입을 미리 정의함

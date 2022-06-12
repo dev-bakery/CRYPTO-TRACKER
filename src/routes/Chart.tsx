@@ -15,6 +15,7 @@ interface ChartProps {
     coinId : string;
 }
 function Chart({coinId}:ChartProps){
+    // refetchInterval 옵션은 10000초 마다 refetch하는 옵션
     const {isLoading, data} = useQuery<IHistorical[]>(["ohlcv", coinId], () => fetchCoinHistory(coinId),{refetchInterval : 10000})
     return <div>
         {isLoading ? "Loading Chart..." : <ApexChart 

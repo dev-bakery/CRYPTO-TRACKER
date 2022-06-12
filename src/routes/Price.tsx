@@ -49,10 +49,10 @@ const ListItem = styled.li`
     margin-bottom: 10px;
 `;
 const TextTitle = styled.span`
-    color:#000
+    color:#000;
 `;
 const TextPrice = styled.span`
-    color:#000
+    color:#000;
 `;
 function Price({coinId}:PriceProps){
 
