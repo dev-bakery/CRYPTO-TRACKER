@@ -86,7 +86,7 @@ function Coins(){
             </Helmet>
             <Header>
                 <Title>Coins</Title>
-                <ButtonTheme onClick={() => {setIsDark(isDark ? false : true)}}>{theme}</ButtonTheme>
+                <ButtonTheme onClick={() => {setIsDark((prev) => !prev)}}>{theme}</ButtonTheme>
             </Header>
             {isLoading ? (
                 <Loader>Loading...</Loader>
